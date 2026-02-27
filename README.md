@@ -108,7 +108,7 @@ Once you're satisfied, click **Complete & Start Over** to clear the session and 
 
 | Dashboard | Scanner |
 | :---: | :---: |
-| ![Dashboard](src/assets/dashboard.png) | ![Scanner](src/assets/Scanner.png) |
+| ![Dashboard](src/assets/Dashboard.png) | ![Scanner](src/assets/Scanner.png) |
 
 | Blueprint | Refinement |
 | :---: | :---: |
