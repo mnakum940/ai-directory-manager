@@ -101,3 +101,27 @@ Once you're satisfied, click **Complete & Start Over** to clear the session and 
 
 *(Add Execution Log Screenshot here)*
 `![Execution Engine Log](assets/execution.png)`
+
+---
+
+## 📸 Screenshots
+
+| Dashboard | Scanner |
+| :---: | :---: |
+| ![Dashboard](src/assets/dashboard.png) | ![Scanner](src/assets/Scanner.png) |
+
+| Blueprint | Refinement |
+| :---: | :---: |
+| ![Blueprint](src/assets/transform-1.png) 
+
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Electron](https://www.electronjs.org/) & [React](https://react.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **AI Engine**: [Ollama](https://ollama.com/) (Local LLM)
+- **Database**: [SQLite](https://www.sqlite.org/) (for transaction logging and rollbacks)
+- **Icons**: [Lucide React](https://lucide.dev/)
+
