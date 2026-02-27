@@ -152,14 +152,44 @@ export default function DiffViewer({ scanResults, blueprint, setBlueprint, onRes
                                 </div>
                             </div>
                         </div>
-                        <button
-                            onClick={() => generateBlueprint(false)}
-                            disabled={isGenerating}
-                            className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white px-6 py-3 rounded-xl font-medium flex items-center gap-2 transition-all"
-                        >
-                            {isGenerating ? <BrainCircuit className="w-5 h-5 animate-pulse" /> : <BrainCircuit className="w-5 h-5" />}
-                            {isGenerating ? 'Synthesizing...' : 'Generate Blueprint'}
-                        </button>
+                        {!isGenerating ? (
+                            <button
+                                onClick={() => generateBlueprint(false)}
+                                disabled={isGenerating}
+                                className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white px-6 py-3 rounded-xl font-medium flex items-center gap-2 transition-all"
+                            >
+                                <BrainCircuit className="w-5 h-5" />
+                                Generate Blueprint
+                            </button>
+                        ) : (
+                            <div className="bg-slate-900/80 backdrop-blur-md border border-emerald-500/30 rounded-xl px-6 py-3 flex flex-col items-center justify-center gap-2 min-w-[200px] shadow-[0_0_15px_rgba(52,211,153,0.15)] relative overflow-hidden">
+                                {/* Animated background pulse */}
+                                <div className="absolute inset-0 bg-emerald-500/5 animate-pulse" />
+
+                                <div className="flex items-center gap-2 text-emerald-400 font-medium relative z-10">
+                                    <BrainCircuit className="w-5 h-5 animate-pulse" />
+                                    <span>AI is Thinking...</span>
+                                </div>
+
+                                {/* Indeterminate Progress Bar */}
+                                <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden relative z-10 mt-1">
+                                    <motion.div
+                                        className="h-full bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full"
+                                        initial={{ x: "-100%" }}
+                                        animate={{ x: "100%" }}
+                                        transition={{
+                                            repeat: Infinity,
+                                            duration: 1.5,
+                                            ease: "easeInOut"
+                                        }}
+                                        style={{ width: "50%" }}
+                                    />
+                                </div>
+                                <p className="text-[10px] text-slate-400 mt-0.5 relative z-10 uppercase tracking-widest font-mono">
+                                    Processing Local Models
+                                </p>
+                            </div>
+                        )}
                     </div>
                 )}
             </header>

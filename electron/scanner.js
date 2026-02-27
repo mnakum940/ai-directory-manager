@@ -37,7 +37,7 @@ async function walkDir(currentPath, results) {
     try {
         const entries = await fs.readdir(currentPath, { withFileTypes: true });
 
-        for (const entry of entries) {
+        const promises = entries.map(async (entry) => {
             const fullPath = path.join(currentPath, entry.name);
 
             if (entry.isDirectory()) {
@@ -47,7 +47,9 @@ async function walkDir(currentPath, results) {
                 const fileInfo = await extractMetadata(fullPath, entry.name);
                 results.push(fileInfo);
             }
-        }
+        });
+
+        await Promise.allSettled(promises);
     } catch (error) {
         console.error(`Error reading directory ${currentPath}:`, error);
     }
@@ -60,9 +62,22 @@ async function extractMetadata(filePath, fileName) {
 
         let preview = null;
         if (PREVIEW_EXTENSIONS.has(ext) && stats.size > 0) {
-            preview = await fs.readFile(filePath, 'utf-8');
-            if (preview.length > MAX_PREVIEW_SIZE) {
-                preview = preview.slice(0, MAX_PREVIEW_SIZE) + '... [TRUNCATED]';
+            let fileHandle = null;
+            try {
+                const bytesToRead = Math.min(stats.size, MAX_PREVIEW_SIZE);
+                const buffer = Buffer.alloc(bytesToRead);
+
+                fileHandle = await fs.open(filePath, 'r');
+                await fileHandle.read(buffer, 0, bytesToRead, 0);
+
+                preview = buffer.toString('utf-8');
+                if (stats.size > MAX_PREVIEW_SIZE) {
+                    preview += '... [TRUNCATED]';
+                }
+            } catch (err) {
+                console.warn(`Could not read preview for ${filePath}: ${err.message}`);
+            } finally {
+                if (fileHandle) await fileHandle.close();
             }
         }
 

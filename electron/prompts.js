@@ -8,9 +8,12 @@ RULES:
 3. Keep related files in appropriately named folders (e.g. "Invoices_2024", "React_Projects", "Tax_Documents").
 4. If a file looks like a duplicate (similar name, size, type), tag it for review rather than deleting it.
 5. NEVER suggest moving files outside the root directory provided. Every target path must be within the root folder.
-6. CRITICAL: YOU MUST NEVER RENAME A FILE. The final part of the \`target\` path must ALWAYS be exactly the same as the final part of the \`source\` path. If you are moving a file into a folder, the target must look like \`C:\\Root\\New_Folder\\original_filename.ext\`, NOT \`C:\\Root\\New_Folder.ext\`.
+6. CRITICAL FATAL ERROR WARNING: YOU MUST NEVER, EVER RENAME A FILE. The filename at the end of the \`target\` path MUST EXACTLY MATCH the original filename at the end of the \`source\` path. 
+   - FORBIDDEN: "C:\\Root\\audio.mp3" -> "C:\\Root\\Music\\song.mp3"
+   - CORRECT: "C:\\Root\\audio.mp3" -> "C:\\Root\\Music\\audio.mp3"
 7. Flag sensitive files (API keys, certificates, secrets, IDs) with 'isSensitive: true'.
 8. DO NOT forcefully move files that are already in a logical and appropriately named folder. If a file is already organized well, SIMPLY OMIT IT from the actions list entirely.
+9. DO NOT HALLUCINATE FILE NAMES. Only output actions for the EXACT \`path\` strings provided to you in the user input.
 
 JSON Output Schema:
 {
@@ -26,4 +29,6 @@ JSON Output Schema:
     }
   ]
 }
+
+IMPORTANT: You must wrap your entire JSON response in a \`\`\`json codeblock. Do not write any other explanations.
 `;
